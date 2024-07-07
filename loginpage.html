@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Login Page</title>
+  <!-- <meta name="google-signin-client_id" content="705495811219-7ltgrvqlh0b8l5vocpp7g1l3gukp53kf.apps.googleusercontent.com"> -->
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-image: url(login.jpg);
+    }
+    .container {
+      width: 300px;
+      margin: 40px auto;
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    /* .g-signin2 {
+      margin-top: 10px;
+    } */
+    label {
+      background-color: white;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Login</h2>
+    <form>
+      <label for="username">Username:</label>
+      <input type="text" id="username" name="username"><br><br>
+      <label for="password">Password:</label>
+      <input type="password" id="password" name="password"><br><br>
+      <input type="submit" value="Login">
+      <!-- Google Sign-In button -->
+      <!-- <button class="g-signin2" > -->
+        <button type="button" onclick="SignIn()"><b>Sign in</b></button>
+      </div>
+    </form>
+    <p>Don't have an account? <a href="register.html">New User</a></p>
+  </div>
+
+  <!-- Include Google Platform Library -->
+  <script src="https://apis.google.com/js/platform.js" async defer></script>
+  <script>
+    // Function to handle Google Sign-In success
+    function SignIn() {
+    // popup.classList.remove("open-popup");
+    let oauth2Endpoint = "https://accounts.google.com/o/oauth2/v2/auth"
+    let form = document.createElement('form')
+    form.setAttribute('method', 'GET')
+    form.setAttribute('action', oauth2Endpoint)
+    
+    let params = {
+        "client_id":"705495811219-7ltgrvqlh0b8l5vocpp7g1l3gukp53kf.apps.googleusercontent.com",
+        "redirect_uri":"http://127.0.0.1:5500/index.html",
+        "response_type":"token",
+        "scope":"https://www.googleapis.com/auth/userinfo.profile",
+        "include_granted_scopes":'true',
+        'state':'pass-through-value'
+    }
+    for(var p in params) {
+        let input = document.createElement('input')
+        input.setAttribute('type', 'hidden')
+        input.setAttribute('name',p)
+        input.setAttribute('value', params[p])
+        form.appendChild(input)
+    }
+    document.body.appendChild(form)
+    form.submit()
+
+}
+    
+  </script>
+</body>
+</html>

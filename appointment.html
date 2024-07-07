@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Appointment - Health Consultation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url(login.jpg);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+        .container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 300px;
+        }
+        input[type="text"], input[type="date"], input[type="time"], input[type="file"] {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .button {
+            background-color: #007BFF;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+        .button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Book Appointment</h2>
+        <form id="appointmentForm"  enctype="multipart/form-data">
+            <label for="name">Name</label>
+            <input type="text" id="name" name="name" required>
+            
+            <label for="date">Appointment Date</label>
+            <input type="date" id="date" name="date" required>
+            
+            <label for="time">Appointment Time</label>
+            <input type="time" id="time" name="time" required>
+
+            <label for="file">Upload File</label>
+            <input type="file" id="file" name="file">
+            
+            <button class="button" type="submit">Book Appointment Now</button>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById('appointmentForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            
+            // Collect form data
+            const formData = new FormData();
+            formData.append('name', document.getElementById('name').value);
+            formData.append('date', document.getElementById('date').value);
+            formData.append('time', document.getElementById('time').value);
+            const file = document.getElementById('file').files[0];
+            if (file) {
+                formData.append('file', file);
+            }
+    
+            // Create an AJAX request to send the form data to the server
+            const xhr = new XMLHttpRequest();
+            xhr.open('POST', 'upload.php', true);
+    
+            xhr.onload = function() {
+                if (xhr.status === 200) {
+                    // Successfully uploaded
+                    alert('Appointment booked successfully.');
+                    // Redirect to final.html
+                    window.location.href = 'final.html';
+                } else {
+                    alert('An error occurred while uploading the file.');
+                }
+            };
+    
+            xhr.send(formData);
+        });
+    </script>
+    
+</body>
+</html>
